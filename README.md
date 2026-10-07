@@ -51,27 +51,27 @@ Frontでユーザーが設定した環境条件をBackendへ送信する。
 
 - `temperature`
   - 型：`number`
-  - 範囲：`0〜100`
+  - 範囲：`1〜10`
   - 内容：温度の高さ
 
 - `space`
   - 型：`number`
-  - 範囲：`0〜100`
+  - 範囲：`1〜10`
   - 内容：活動空間の広さ
 
 - `brightness`
   - 型：`number`
-  - 範囲：`0〜100`
+  - 範囲：`1〜10`
   - 内容：環境の明るさ
 
 - `food`
   - 型：`number`
-  - 範囲：`0〜100`
+  - 範囲：`1〜10`
   - 内容：餌資源の豊富さ
 
 - `predators`
   - 型：`number`
-  - 範囲：`0〜100`
+  - 範囲：`1〜10`
   - 内容：天敵の多さ
 
 #### Request例
@@ -79,11 +79,11 @@ Frontでユーザーが設定した環境条件をBackendへ送信する。
 ```json
 {
   "environment": "ocean",
-  "temperature": 20,
-  "space": 80,
-  "brightness": 10,
-  "food": 70,
-  "predators": 80
+  "temperature": 5,
+  "space": 8,
+  "brightness": 1,
+  "food": 7,
+  "predators": 8
 }
 ```
 
@@ -91,7 +91,7 @@ Frontでユーザーが設定した環境条件をBackendへ送信する。
 
 MVPではデータの扱いやすさを優先し、各環境パラメータを0〜100の数値として扱う。
 
-基本的に `0` を「低い・少ない・狭い」、`100` を「高い・多い・広い」とする。
+基本的に `1` を「低い・少ない・狭い」、`10` を「高い・多い・広い」とする。
 
 各パラメータの具体的な基準については、今後の企画仕様やAI連携方法に応じて再検討する。
 
@@ -144,11 +144,11 @@ MVPではAIによる生成を行わないため、あらかじめ用意したテ
   "imageUrl": "/images/test-ocean.png",
   "description": "暗く広い海中環境に適応した未来生物",
   "parameters": {
-    "temperature": 20,
-    "space": 80,
-    "brightness": 10,
-    "food": 70,
-    "predators": 80
+    "temperature": 2,
+    "space": 8,
+    "brightness": 1,
+    "food": 7,
+    "predators": 8
   }
 }
 ```
@@ -173,11 +173,11 @@ MVPではAIを使用しないため、動作確認用として各環境に対応
   "imageUrl": "/images/test-ocean.png",
   "description": "暗く広い海中環境に適応した未来生物",
   "parameters": {
-    "temperature": 20,
-    "space": 80,
-    "brightness": 10,
-    "food": 70,
-    "predators": 80
+    "temperature": 2,
+    "space": 8,
+    "brightness": 1,
+    "food": 7,
+    "predators": 8
   }
 }
 ```
@@ -192,11 +192,11 @@ MVPではAIを使用しないため、動作確認用として各環境に対応
   "imageUrl": "/images/test-cave.png",
   "description": "暗く狭い洞窟環境に適応した未来生物",
   "parameters": {
-    "temperature": 30,
-    "space": 20,
-    "brightness": 0,
-    "food": 30,
-    "predators": 40
+    "temperature": 3,
+    "space": 2,
+    "brightness": 1,
+    "food": 3,
+    "predators": 4
   }
 }
 ```
@@ -211,17 +211,17 @@ MVPではAIを使用しないため、動作確認用として各環境に対応
   "imageUrl": "/images/test-land.png",
   "description": "明るく餌資源の少ない地上環境に適応した未来生物",
   "parameters": {
-    "temperature": 80,
-    "space": 90,
-    "brightness": 90,
-    "food": 20,
-    "predators": 60
+    "temperature": 8,
+    "space": 9,
+    "brightness": 9,
+    "food": 2,
+    "predators": 6
   }
 }
 ```
 
 追記　
 温度はどの範囲にするか
-陸海洞で分けるのかすべて統一して-50~50度にするとか
+陸海洞で分けるのかすべて統一して-50~50度にするとか(検討中)
 
 MVP段階ではimageUrlはいるのか
