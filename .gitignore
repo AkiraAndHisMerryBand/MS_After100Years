@@ -39,3 +39,34 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#---追加
+# Unity
+/[L-l]ibrary/
+/[T-t]emp/
+/[O-o]bj/
+/[B-b]uild/
+/[B-b]uilds/
+/[L-l]ogs/
+/[U-u]ser[S-s]ettings/
+/[M-m]emoryCaptures/
+/[A-a]ssets/Plugins/Editor/JetBrains*
+.vs/
+.idea/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.opendb
+*.idb
+sysinfo.txt
+# Unity の不要フォルダーを除外
+/[L-l]ibrary/
+Library/
