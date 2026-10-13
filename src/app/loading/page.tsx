@@ -1,4 +1,5 @@
 "use client";
+import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
 import Image from "next/image";
@@ -34,7 +35,19 @@ export default function LoadingPage() {
     ];
 
     const router = useRouter();
-    // router.push(`/result?environment=${environment}`);
+    useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.key === "Enter") {
+            router.push(`/result?${searchParams.toString()}`);
+        }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+    };
+    }, [router, searchParams]);
 
     return (
         <main className="loading-page" style={{ background: data.background}}>

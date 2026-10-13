@@ -21,7 +21,7 @@ type ParameterKey =
   | "space"
   | "brightness"
   | "food"
-  | "weather";
+  | "predators";
 
 const environmentStyles: Record<
   Environment,
@@ -65,7 +65,7 @@ const parameters: {
   { key: "space", label: "空間の広さ", Icon: Expand },
   { key: "brightness", label: "明るさ", Icon: Sun },
   { key: "food", label: "餌資源", Icon: Fish },
-  { key: "weather", label: "天敵の多さ", Icon: TriangleAlert },
+  { key: "predators", label: "天敵の多さ", Icon: TriangleAlert },
 ];
 
 export default function SettingPage() {
@@ -88,7 +88,7 @@ export default function SettingPage() {
     space: 5,
     brightness: 5,
     food: 5,
-    weather: 5,
+    predators: 5,
   });
 
   const handleEvolve = () => {

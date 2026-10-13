@@ -19,7 +19,7 @@ type ParameterKey =
   | "space"
   | "brightness"
   | "food"
-  | "weather";
+  | "predators";
 
 const environmentStyles: Record<
   Environment,
@@ -59,7 +59,7 @@ const parameters: {
   { key: "space", label: "空間の広さ", Icon: Expand },
   { key: "brightness", label: "明るさ", Icon: Sun },
   { key: "food", label: "餌資源", Icon: Fish },
-  { key: "weather", label: "天敵の多さ", Icon: TriangleAlert },
+  { key: "predators", label: "天敵の多さ", Icon: TriangleAlert },
 ];
 
 export default function ResultPage() {
@@ -84,21 +84,14 @@ export default function ResultPage() {
     space: Number(searchParams.get("space") ?? 5),
     brightness: Number(searchParams.get("brightness") ?? 5),
     food: Number(searchParams.get("food") ?? 5),
-    weather: Number(searchParams.get("weather") ?? 5),
+    predators: Number(searchParams.get("predators") ?? 5),
   };
 
-  const handleEvolveAgain = () => {
-    const query = new URLSearchParams({
-      environment,
-      ...Object.fromEntries(
-        Object.entries(values).map(([key, value]) => [
-          key,
-          String(value),
-        ])
-      ),
-    });
-
-    router.push(`/loading?${query.toString()}`);
+  const handleRelease = () => {
+    // TODO: バックエンドと連携して生物を大型モニターに放つ
+    console.log("生物の名前:", creatureName);
+    console.log("生息環境:", environment);
+    console.log("パラメーター:", values);
   };
 
   return (
@@ -156,9 +149,10 @@ export default function ResultPage() {
           <button
             type="button"
             className="evolve-button"
-            onClick={handleEvolveAgain}
+            onClick={handleRelease}
+            disabled={!creatureName.trim()}
           >
-            進化させる
+            この生き物を放つ
           </button>
         </div>
       </section>

@@ -119,7 +119,7 @@
   background: linear-gradient(
     90deg,
     var(--secondary) 0%,
-    var(--primary) 100%
+    #FFFFFF 100%
   );
   color: #ffffff;
   font-size: 17px;
@@ -128,13 +128,18 @@
   transition: opacity 0.2s;
 }
 
-.evolve-button:hover {
-  opacity: 0.85;
+.evolve-button:hover:not(:disabled) {
+  opacity: 0.8;
 }
 
 .evolve-button:focus-visible {
   outline: 2px solid var(--secondary);
   outline-offset: 3px;
+}
+
+.evolve-button:disabled {
+  cursor: not-allowed;
+  opacity: 1;
 }
 
 @media (max-width: 600px) {
