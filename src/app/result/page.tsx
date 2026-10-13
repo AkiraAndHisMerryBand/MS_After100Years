@@ -1,0 +1,168 @@
+
+"use client";
+
+import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import "./result.css";
+import {
+  Thermometer,
+  Expand,
+  Sun,
+  Fish,
+  TriangleAlert,
+} from "lucide-react";
+
+type Environment = "land" | "ocean" | "cave";
+
+type ParameterKey =
+  | "temperature"
+  | "space"
+  | "brightness"
+  | "food"
+  | "weather";
+
+const environmentStyles: Record<
+  Environment,
+  {
+    name: string;
+    primary: string;
+    secondary: string;
+    background: string;
+  }
+> = {
+  land: {
+    name: "地上",
+    primary: "#69F2A9",
+    secondary: "#276C4A",
+    background: "linear-gradient(135deg, #FFFFFF 0%, #69F2A9 100%)",
+  },
+  ocean: {
+    name: "海底",
+    primary: "#6984F2",
+    secondary: "#000083",
+    background: "linear-gradient(135deg, #FFFFFF 0%, #6984F2 100%)",
+  },
+  cave: {
+    name: "洞窟",
+    primary: "#C969F2",
+    secondary: "#580088",
+    background: "linear-gradient(135deg, #FFFFFF 0%, #C969F2 100%)",
+  },
+};
+
+const parameters: {
+  key: ParameterKey;
+  label: string;
+  Icon: typeof Thermometer;
+}[] = [
+  { key: "temperature", label: "温度", Icon: Thermometer },
+  { key: "space", label: "空間の広さ", Icon: Expand },
+  { key: "brightness", label: "明るさ", Icon: Sun },
+  { key: "food", label: "餌資源", Icon: Fish },
+  { key: "weather", label: "天敵の多さ", Icon: TriangleAlert },
+];
+
+export default function ResultPage() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const environmentParam = searchParams.get("environment");
+
+  const environment: Environment =
+    environmentParam === "ocean" ||
+    environmentParam === "cave" ||
+    environmentParam === "land"
+      ? environmentParam
+      : "land";
+
+  const style = environmentStyles[environment];
+
+  const [creatureName, setCreatureName] = useState("");
+
+  const values: Record<ParameterKey, number> = {
+    temperature: Number(searchParams.get("temperature") ?? 5),
+    space: Number(searchParams.get("space") ?? 5),
+    brightness: Number(searchParams.get("brightness") ?? 5),
+    food: Number(searchParams.get("food") ?? 5),
+    weather: Number(searchParams.get("weather") ?? 5),
+  };
+
+  const handleEvolveAgain = () => {
+    const query = new URLSearchParams({
+      environment,
+      ...Object.fromEntries(
+        Object.entries(values).map(([key, value]) => [
+          key,
+          String(value),
+        ])
+      ),
+    });
+
+    router.push(`/loading?${query.toString()}`);
+  };
+
+  return (
+    <main
+      className="result-page"
+      style={
+        {
+          "--primary": style.primary,
+          "--secondary": style.secondary,
+          "--background": style.background,
+        } as React.CSSProperties
+      }
+    >
+      <section className="result-content">
+        <div className="result-card">
+          <span className="result-card-heading">
+            生成された未来生物
+          </span>
+
+          <div className="result-image" aria-label="生成された生物">
+            ?
+          </div>
+        </div>
+
+        <div className="result-controls">
+          <div className="parameter-list">
+            {parameters.map(({ key, label, Icon }) => (
+              <div className="parameter-row" key={key}>
+                <Icon
+                  className="parameter-icon"
+                  size={17}
+                  strokeWidth={2}
+                  aria-hidden="true"
+                />
+
+                <span>{label}</span>
+
+                <output className="parameter-value">
+                  {values[key]}
+                </output>
+              </div>
+            ))}
+          </div>
+
+          <input
+            className="creature-name-input"
+            type="text"
+            maxLength={30}
+            placeholder="生物の名前を入力"
+            aria-label="生物の名前"
+            value={creatureName}
+            onChange={(event) => setCreatureName(event.target.value)}
+          />
+
+          <button
+            type="button"
+            className="evolve-button"
+            onClick={handleEvolveAgain}
+          >
+            進化させる
+          </button>
+        </div>
+      </section>
+      
+    </main>
+  );
+}

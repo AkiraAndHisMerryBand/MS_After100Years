@@ -1,0 +1,217 @@
+ .setting-page {
+     width: 100%;
+     min-height: 100vh;
+     box-sizing: border-box;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 32px;
+     background: var(--page-background);
+     font-family: Arial, "Noto Sans JP", sans-serif;
+     color: #111111;
+ }
+
+ .setting-content {
+     width: 100%;
+     max-width: 900px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     gap: 40px;
+ }
+
+ .creature-card {
+     width: 220px;
+     min-width: 220px;
+     height: 320px;
+     padding: 20px 16px;
+     box-sizing: border-box;
+     border: 1px solid #c8c8c8;
+     border-radius: 7px;
+     background: #ffffff;
+     display: flex;
+     flex-direction: column;
+     align-items: flex-start;
+     overflow: hidden;
+ }
+
+ .creature-heading {
+     display: flex;
+     flex-direction: column;
+     gap: 6px;
+     font-size: 16px;
+     line-height: 1.5;
+ }
+
+ .creature-heading strong {
+     font-size: 20px;
+     font-weight: 700;
+ }
+
+ .creature-image {
+     width: 100%;
+     flex: 1;
+     min-height: 0;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+
+ .animal-image {
+     width: 100%;
+     height: 100%;
+     object-fit: contain;
+     object-position: center;
+ }
+
+ .setting-controls {
+     flex: 1;
+     min-width: 0;
+     display: flex;
+     flex-direction: column;
+     gap: 28px;
+ }
+
+ .parameter-list {
+     display: flex;
+     flex-direction: column;
+     gap: 20px;
+ }
+
+ .parameter-row {
+     display: grid;
+     grid-template-columns: 28px minmax(130px, 1fr) 35px minmax(120px,
+             260px);
+     align-items: center;
+     gap: 12px;
+     min-height: 30px;
+     font-size: 17px;
+ }
+
+ .parameter-icon {
+     color: var(--secondary);
+     width: 26px;
+     height: 26px;
+ }
+
+ .parameter-row label {
+     white-space: nowrap;
+ }
+
+ .parameter-value {
+     text-align: center;
+     font-size: 17px;
+ }
+
+ .parameter-slider {
+     display: block;
+     width: 100%;
+     min-width: 0;
+     height: 8px;
+     margin: 0;
+     padding: 0;
+     appearance: none;
+     -webkit-appearance: none;
+     border: none;
+     border-radius: 10px;
+     background: #d9d9d9;
+     cursor: pointer;
+ }
+
+ .parameter-slider::-webkit-slider-thumb {
+     appearance: none;
+     -webkit-appearance: none;
+     width: 20px;
+     height: 20px;
+     border: 3px solid var(--secondary);
+     border-radius: 50%;
+     background: #ffffff;
+ }
+
+ .parameter-slider::-moz-range-thumb {
+     width: 14px;
+     height: 14px;
+     border: 3px solid var(--secondary);
+     border-radius: 50%;
+     background: #ffffff;
+ }
+
+ .evolve-button {
+     display: block;
+     width: 100%;
+     height: 46px;
+     padding: 0 12px;
+     border: none;
+     border-radius: 7px;
+     background: linear-gradient(90deg,
+             var(--secondary) 0%,
+             var(--primary) 100%);
+     color: #ffffff;
+     font-size: 17px;
+     font-weight: 600;
+     cursor: pointer;
+     transition: opacity 0.2s;
+ }
+
+ .evolve-button:hover {
+     opacity: 0.85;
+ }
+
+ .evolve-button:focus-visible,
+ .parameter-slider:focus-visible {
+     outline: 2px solid var(--secondary);
+     outline-offset: 3px;
+ }
+
+ @media (max-width: 420px) {
+     .setting-page {
+         padding: 20px 14px;
+     }
+
+     .setting-content {
+         gap: 16px;
+     }
+
+     .creature-card {
+         width: 135px;
+         min-width: 135px;
+         height: 230px;
+         padding: 12px 9px;
+     }
+
+     .creature-heading {
+         font-size: 12px;
+     }
+
+     .creature-heading strong {
+         font-size: 15px;
+     }
+
+     .setting-controls {
+         gap: 18px;
+     }
+
+     .parameter-list {
+         gap: 14px;
+     }
+
+     .parameter-row {
+         grid-template-columns: 20px minmax(65px, 1fr) 20px minmax(55px, 100px);
+         gap: 5px;
+         font-size: 11px;
+     }
+
+     .parameter-icon {
+         width: 18px;
+         height: 18px;
+     }
+
+     .parameter-value {
+         font-size: 12px;
+     }
+
+     .evolve-button {
+         height: 36px;
+         font-size: 13px;
+     }
+ }
