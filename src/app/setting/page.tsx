@@ -105,6 +105,10 @@ export default function SettingPage() {
     router.push(`/loading?${query.toString()}`);
   };
 
+  const handleBack = () => {
+    router.push("/");
+  };
+
   return (
     <main
       className="setting-page"
@@ -174,13 +178,23 @@ export default function SettingPage() {
             ))}
           </div>
 
-          <button
-            type="button"
-            className="evolve-button"
-            onClick={handleEvolve}
-          >
-            進化させる
-          </button>
+          <div className="setting-buttons">
+            <button
+              type="button"
+              className="back-button"
+              onClick={handleBack}
+            >
+              戻る
+            </button>
+
+            <button
+              type="button"
+              className="evolve-button"
+              onClick={handleEvolve}
+            >
+              進化させる
+            </button>
+          </div>
         </div>
       </section>
 

@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import "./result.css";
 import {
   Thermometer,
@@ -63,7 +63,6 @@ const parameters: {
 ];
 
 export default function ResultPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
 
   const environmentParam = searchParams.get("environment");
