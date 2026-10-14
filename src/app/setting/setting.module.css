@@ -1,5 +1,5 @@
 
-.setting-page {
+.settingpage {
     width: 100%;
     min-height: 100vh;
     box-sizing: border-box;
@@ -12,7 +12,7 @@
     color: #111111;
 }
 
-.setting-content {
+.settingcontent {
     width: 100%;
     max-width: 900px;
     display: flex;
@@ -21,7 +21,7 @@
     gap: 40px;
 }
 
-.creature-card {
+.creaturecard {
     width: 260px;
     min-width: 260px;
     height: 390px;
@@ -36,7 +36,7 @@
     overflow: hidden;
 }
 
-.creature-heading {
+.creatureheading {
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -44,12 +44,12 @@
     line-height: 1.5;
 }
 
-.creature-heading strong {
+.creatureheading strong {
     font-size: 20px;
     font-weight: 700;
 }
 
-.creature-image {
+.creatureimage {
     width: 100%;
     flex: 1;
     min-height: 0;
@@ -58,14 +58,14 @@
     justify-content: center;
 }
 
-.animal-image {
+.animalimage {
     width: 100%;
     height: 100%;
     object-fit: contain;
     object-position: center;
 }
 
-.setting-controls {
+.settingcontrols {
     flex: 1;
     min-width: 0;
     display: flex;
@@ -73,13 +73,13 @@
     gap: 28px;
 }
 
-.parameter-list {
+.parameterlist {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.parameter-row {
+.parameterrow {
     display: grid;
     grid-template-columns: 28px minmax(130px, 1fr) 35px minmax(120px, 260px);
     align-items: center;
@@ -88,22 +88,22 @@
     font-size: 17px;
 }
 
-.parameter-icon {
+.parametericon {
     color: var(--secondary);
     width: 26px;
     height: 26px;
 }
 
-.parameter-row label {
+.parameterrow label {
     white-space: nowrap;
 }
 
-.parameter-value {
+.parametervalue {
     text-align: center;
     font-size: 17px;
 }
 
-.parameter-slider {
+.parameterslider {
     display: block;
     width: 100%;
     min-width: 0;
@@ -118,7 +118,7 @@
     cursor: pointer;
 }
 
-.parameter-slider::-webkit-slider-thumb {
+.parameterslider::-webkit-slider-thumb {
     appearance: none;
     -webkit-appearance: none;
     width: 20px;
@@ -128,7 +128,7 @@
     background: #ffffff;
 }
 
-.parameter-slider::-moz-range-thumb {
+.parameterslider::-moz-range-thumb {
     width: 14px;
     height: 14px;
     border: 3px solid var(--secondary);
@@ -136,14 +136,14 @@
     background: #ffffff;
 }
 
-.setting-buttons {
+.settingbuttons {
     display: flex;
     width: 100%;
     align-items: center;
     gap: 24px;
 }
 
-.back-button {
+.backbutton {
     box-sizing: border-box;
     flex: 0 0 100px;
     height: 46px;
@@ -158,11 +158,11 @@
     transition: opacity 0.2s;
 }
 
-.back-button:hover {
+.backbutton:hover {
     opacity: 0.8;
 }
 
-.evolve-button {
+.evolvebutton {
     display: block;
     width: 100%;
     height: 46px;
@@ -179,82 +179,82 @@
     transition: opacity 0.2s;
 }
 
-.setting-buttons .evolve-button {
+.settingbuttons .evolve-button {
     flex: 1;
     width: auto;
     min-width: 0;
 }
 
-.evolve-button:hover {
+.evolvebutton:hover {
     opacity: 0.8;
 }
 
-.evolve-button:focus-visible,
-.back-button:focus-visible,
+.evolvebutton:focus-visible,
+.backbutton:focus-visible,
 .parameter-slider:focus-visible {
     outline: 2px solid var(--secondary);
     outline-offset: 3px;
 }
 
 @media (max-width: 420px) {
-    .setting-page {
+    .settingpage {
         padding: 20px 14px;
     }
 
-    .setting-content {
+    .settingcontent {
         gap: 16px;
     }
 
-    .creature-card {
+    .creaturecard {
         width: 135px;
         min-width: 135px;
         height: 230px;
         padding: 12px 9px;
     }
 
-    .creature-heading {
+    .creatureheading {
         font-size: 12px;
     }
 
-    .creature-heading strong {
+    .creatureheading strong {
         font-size: 15px;
     }
 
-    .setting-controls {
+    .settingcontrols {
         gap: 18px;
     }
 
-    .parameter-list {
+    .parameterlist {
         gap: 14px;
     }
 
-    .parameter-row {
+    .parameterrow {
         grid-template-columns: 20px minmax(65px, 1fr) 20px minmax(55px, 100px);
         gap: 5px;
         font-size: 11px;
     }
 
-    .parameter-icon {
+    .parametericon {
         width: 18px;
         height: 18px;
     }
 
-    .parameter-value {
+    .parametervalue {
         font-size: 12px;
     }
 
-    .setting-buttons {
+    .settingbuttons {
         gap: 6px;
     }
 
-    .back-button {
+    .backbutton {
         flex-basis: 55px;
         height: 36px;
         padding: 0 4px;
         font-size: 13px;
     }
 
-    .evolve-button {
+    .evolvebutton {
         height: 36px;
         font-size: 13px;
         padding: 0 4px;

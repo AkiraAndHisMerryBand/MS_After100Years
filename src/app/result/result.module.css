@@ -1,4 +1,4 @@
-.result-page {
+.resultpage {
   width: 100%;
   min-height: 100vh;
   box-sizing: border-box;
@@ -11,7 +11,7 @@
   color: #111111;
 }
 
-.result-content {
+.resultcontent {
   width: 100%;
   max-width: 900px;
   display: flex;
@@ -20,7 +20,7 @@
   gap: 48px;
 }
 
-.result-card {
+.resultcard {
   width: 260px;
   min-width: 260px;
   height: 390px;
@@ -34,7 +34,7 @@
   align-items: center;
 }
 
-.result-card-heading {
+.resultcardheading {
   width: 100%;
   font-size: 17px;
   line-height: 1.5;
@@ -42,7 +42,7 @@
   white-space: nowrap;
 }
 
-.result-image {
+.resultimage {
   flex: 1;
   display: flex;
   align-items: center;
@@ -54,7 +54,7 @@
   line-height: 1;
 }
 
-.result-controls {
+.resultcontrols {
   flex: 1;
   min-width: 0;
   display: flex;
@@ -62,13 +62,13 @@
   gap: 18px;
 }
 
-.parameter-list {
+.parameterlist {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.parameter-row {
+.parameterrow {
   display: grid;
   grid-template-columns: 28px minmax(130px, 1fr) 35px;
   align-items: center;
@@ -77,18 +77,18 @@
   font-size: 17px;
 }
 
-.parameter-icon {
+.parametericon {
   color: var(--secondary);
   width: 26px;
   height: 26px;
 }
 
-.parameter-value {
+.parametervalue {
   text-align: center;
   font-size: 17px;
 }
 
-.creature-name-input {
+.creatureNameInput {
   display: block;
   width: 100%;
   height: 46px;
@@ -102,25 +102,23 @@
   font-size: 16px;
 }
 
-.creature-name-input::placeholder {
+.creatureNameInput::placeholder {
   color: #c8c8c8;
 }
 
-.creature-name-input:focus {
+.creatureNameInput:focus {
   border-color: var(--secondary);
 }
 
-.evolve-button {
+.evolveButton {
   display: block;
   width: 100%;
   height: 46px;
   border: none;
   border-radius: 7px;
-  background: linear-gradient(
-    90deg,
-    var(--secondary) 0%,
-    #FFFFFF 100%
-  );
+  background: linear-gradient(90deg,
+      var(--secondary) 0%,
+      #FFFFFF 100%);
   color: #ffffff;
   font-size: 17px;
   font-weight: 600;
@@ -128,74 +126,74 @@
   transition: opacity 0.2s;
 }
 
-.evolve-button:hover:not(:disabled) {
+.evolveButton:hover:not(:disabled) {
   opacity: 0.8;
 }
 
-.evolve-button:focus-visible {
+.evolveButton:focus-visible {
   outline: 2px solid var(--secondary);
   outline-offset: 3px;
 }
 
-.evolve-button:disabled {
+.evolveButton:disabled {
   cursor: not-allowed;
   opacity: 1;
 }
 
 @media (max-width: 600px) {
-  .result-page {
+  .resultpage {
     padding: 20px 14px;
   }
 
-  .result-content {
+  .resultcontent {
     gap: 16px;
   }
 
-  .result-card {
+  .resultcard {
     width: 135px;
     min-width: 135px;
     height: 230px;
     padding: 12px 9px;
   }
 
-  .result-card-heading {
+  .resultcardheading {
     font-size: 11px;
   }
 
-  .result-image {
+  .resultimage {
     font-size: 90px;
   }
 
-  .result-controls {
+  .resultcontrols {
     gap: 18px;
   }
 
-  .parameter-list {
+  .parameterlist {
     gap: 14px;
   }
 
-  .parameter-row {
+  .parameterrow {
     grid-template-columns: 20px minmax(65px, 1fr) 20px;
     gap: 5px;
     font-size: 11px;
   }
 
-  .parameter-icon {
+  .parametericon {
     width: 18px;
     height: 18px;
   }
 
-  .parameter-value {
+  .parametervalue {
     font-size: 12px;
   }
 
-  .creature-name-input {
+  .creatureNameInput {
     height: 36px;
     padding: 0 8px;
     font-size: 12px;
   }
 
-  .evolve-button {
+  .evolveButton {
     height: 36px;
     font-size: 13px;
   }

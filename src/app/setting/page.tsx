@@ -4,7 +4,7 @@
 import { useState } from "react";
 import type { CSSProperties } from "react";
 import Image from "next/image";
-import "./setting.css";
+import styles from "./setting.module.css";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Thermometer,
@@ -111,7 +111,7 @@ export default function SettingPage() {
 
   return (
     <main
-      className="setting-page"
+      className={styles.settingpage}
       style={
         {
           "--primary": style.primary,
@@ -120,33 +120,33 @@ export default function SettingPage() {
         } as CSSProperties
       }
     >
-      <section className="setting-content">
+      <section className={styles.settingcontent}>
         {/* 左側：進化前の生物カード */}
-        <div className="creature-card">
-          <div className="creature-heading">
+        <div className={styles.creaturecard}>
+          <div className={styles.creatureheading}>
             <span>進化前生物</span>
             <strong>{style.creatureName}</strong>
           </div>
 
-          <div className="creature-image">
+          <div className={styles.creatureimage}>
             <Image
               src={style.image}
               alt={style.creatureName}
               width={160}
               height={160}
               priority
-              className="animal-image"
+              className={styles.animalimage}
             />
           </div>
         </div>
 
         {/* 右側：パラメータ設定 */}
-        <div className="setting-controls">
-          <div className="parameter-list">
+        <div className={styles.settingcontrols}>
+          <div className={styles.parameterlist}>
             {parameters.map(({ key, label, Icon }) => (
-              <div className="parameter-row" key={key}>
+              <div className={styles.parameterrow} key={key}>
                 <Icon
-                  className="parameter-icon"
+                  className={styles.parametericon}
                   size={17}
                   strokeWidth={2}
                   aria-hidden="true"
@@ -154,13 +154,13 @@ export default function SettingPage() {
 
                 <label htmlFor={key}>{label}</label>
 
-                <output htmlFor={key} className="parameter-value">
+                <output htmlFor={key} className={styles.parametervalue}>
                   {values[key]}
                 </output>
 
                 <input
                   id={key}
-                  className="parameter-slider"
+                  className={styles.parameterslider}
                   type="range"
                   min={1}
                   max={10}
@@ -178,10 +178,10 @@ export default function SettingPage() {
             ))}
           </div>
 
-          <div className="setting-buttons">
+          <div className={styles.settingbuttons}>
             <button
               type="button"
-              className="back-button"
+              className={styles.backbutton}
               onClick={handleBack}
             >
               戻る
@@ -189,7 +189,7 @@ export default function SettingPage() {
 
             <button
               type="button"
-              className="evolve-button"
+              className={styles.evolvebutton}
               onClick={handleEvolve}
             >
               進化させる

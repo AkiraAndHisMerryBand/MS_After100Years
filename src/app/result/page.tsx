@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
-import "./result.css";
+import styles from "./result.module.css";
 import {
   Thermometer,
   Expand,
@@ -95,7 +95,7 @@ export default function ResultPage() {
 
   return (
     <main
-      className="result-page"
+      className={styles.resultpage}
       style={
         {
           "--primary": style.primary,
@@ -104,23 +104,23 @@ export default function ResultPage() {
         } as React.CSSProperties
       }
     >
-      <section className="result-content">
-        <div className="result-card">
-          <span className="result-card-heading">
+      <section className={styles.resultcontent}>
+        <div className={styles.resultcard}>
+          <span className={styles.resultcardheading}>
             生成された未来生物
           </span>
 
-          <div className="result-image" aria-label="生成された生物">
+          <div className={styles.resultimage} aria-label="生成された生物">
             ?
           </div>
         </div>
 
-        <div className="result-controls">
-          <div className="parameter-list">
+        <div className={styles.resultcontrols}>
+          <div className={styles.parameterlist}>
             {parameters.map(({ key, label, Icon }) => (
-              <div className="parameter-row" key={key}>
+              <div className={styles.parameterrow} key={key}>
                 <Icon
-                  className="parameter-icon"
+                  className={styles.parametericon}
                   size={17}
                   strokeWidth={2}
                   aria-hidden="true"
@@ -128,7 +128,7 @@ export default function ResultPage() {
 
                 <span>{label}</span>
 
-                <output className="parameter-value">
+                <output className={styles.parametervalue}>
                   {values[key]}
                 </output>
               </div>
@@ -136,7 +136,7 @@ export default function ResultPage() {
           </div>
 
           <input
-            className="creature-name-input"
+            className={styles.creatureNameInput}
             type="text"
             maxLength={30}
             placeholder="生物の名前を入力"
@@ -147,7 +147,7 @@ export default function ResultPage() {
 
           <button
             type="button"
-            className="evolve-button"
+            className={styles.evolveButton}
             onClick={handleRelease}
             disabled={!creatureName.trim()}
           >
