@@ -30,7 +30,7 @@ export default function TestResultPage() {
         </pre>
       )}
 
-      <Link href="/test-send">送信画面に戻る</Link>
+      <Link href="/test/test-send">送信画面に戻る</Link>
     </main>
   );
 }
