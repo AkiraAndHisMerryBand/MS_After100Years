@@ -1,7 +1,8 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { CSSProperties } from "react";
 import { useSearchParams } from "next/navigation";
 import styles from "./result.module.css";
 import {
@@ -20,6 +21,25 @@ type ParameterKey =
   | "brightness"
   | "food"
   | "predators";
+
+type Parameters = Record<ParameterKey, number>;
+
+type ApiResult = {
+  message?: string;
+  receiveData?: {
+    environment?: string;
+    temperature?: number;
+    space?: number;
+    brightness?: number;
+    food?: number;
+    predators?: number;
+  };
+  id?: string;
+  name?: string;
+  imageUrl?: string;
+  description?: string;
+  parameters?: Partial<Parameters>;
+};
 
 const environmentStyles: Record<
   Environment,
@@ -58,39 +78,130 @@ const parameters: {
   { key: "temperature", label: "温度", Icon: Thermometer },
   { key: "space", label: "空間の広さ", Icon: Expand },
   { key: "brightness", label: "明るさ", Icon: Sun },
-  { key: "food", label: "餌資源", Icon: Fish },
+  { key: "food", label: "食料", Icon: Fish },
   { key: "predators", label: "天敵の多さ", Icon: TriangleAlert },
 ];
+
+const defaultValues: Parameters = {
+  temperature: 5,
+  space: 5,
+  brightness: 5,
+  food: 5,
+  predators: 5,
+};
+
+function isEnvironment(value: unknown): value is Environment {
+  return value === "land" || value === "ocean" || value === "cave";
+}
 
 export default function ResultPage() {
   const searchParams = useSearchParams();
 
   const environmentParam = searchParams.get("environment");
 
-  const environment: Environment =
-    environmentParam === "ocean" ||
-    environmentParam === "cave" ||
-    environmentParam === "land"
-      ? environmentParam
-      : "land";
+  const [environment, setEnvironment] = useState<Environment>(
+    isEnvironment(environmentParam) ? environmentParam : "land"
+  );
 
-  const style = environmentStyles[environment];
-
-  const [creatureName, setCreatureName] = useState("");
-
-  const values: Record<ParameterKey, number> = {
+  const [values, setValues] = useState<Parameters>(() => ({
     temperature: Number(searchParams.get("temperature") ?? 5),
     space: Number(searchParams.get("space") ?? 5),
     brightness: Number(searchParams.get("brightness") ?? 5),
     food: Number(searchParams.get("food") ?? 5),
     predators: Number(searchParams.get("predators") ?? 5),
-  };
+  }));
+
+  const [creatureName, setCreatureName] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [description, setDescription] = useState("");
+  const [creatureId, setCreatureId] = useState("");
+  const [received, setReceived] = useState(false);
+
+  useEffect(() => {
+    const saved = sessionStorage.getItem("creatureTestResult");
+
+    if (!saved) {
+      return;
+    }
+
+    try {
+      const result: ApiResult = JSON.parse(saved);
+
+      // APIが生き物データを直接返す場合
+      // または receiveData に設定データを入れて返す場合の両方に対応
+      const receivedData = result.receiveData ?? result;
+
+      if (isEnvironment(receivedData.environment)) {
+        setEnvironment(receivedData.environment);
+      }
+
+      const receivedParameters: Partial<Parameters> =
+        "parameters" in receivedData && receivedData.parameters
+          ? receivedData.parameters
+          : receivedData;
+
+      setValues((previous) => ({
+        temperature:
+          typeof receivedParameters.temperature === "number"
+            ? receivedParameters.temperature
+            : previous.temperature,
+        space:
+          typeof receivedParameters.space === "number"
+            ? receivedParameters.space
+            : previous.space,
+        brightness:
+          typeof receivedParameters.brightness === "number"
+            ? receivedParameters.brightness
+            : previous.brightness,
+        food:
+          typeof receivedParameters.food === "number"
+            ? receivedParameters.food
+            : previous.food,
+        predators:
+          typeof receivedParameters.predators === "number"
+            ? receivedParameters.predators
+            : previous.predators,
+      }));
+
+      if (typeof result.name === "string") {
+        setCreatureName(result.name);
+      }
+
+      if (typeof result.imageUrl === "string") {
+        setImageUrl(result.imageUrl);
+      }
+
+      if (typeof result.description === "string") {
+        setDescription(result.description);
+      }
+
+      if (typeof result.id === "string") {
+        setCreatureId(result.id);
+      }
+
+      setReceived(true);
+    } catch (error) {
+      console.error("受信データの読み込みに失敗しました:", error);
+    }
+  }, []);
+
+  const style = environmentStyles[environment];
 
   const handleRelease = () => {
-    // TODO: バックエンドと連携して生物を大型モニターに放つ
-    console.log("生物の名前:", creatureName);
-    console.log("生息環境:", environment);
-    console.log("パラメーター:", values);
+    const releaseData = {
+      id: creatureId,
+      name: creatureName.trim(),
+      environment,
+      parameters: values,
+      imageUrl,
+      description,
+    };
+
+    console.log("生き物の名前:", releaseData.name);
+    console.log("生息環境:", releaseData.environment);
+    console.log("パラメータ:", releaseData.parameters);
+    console.log("受信データあり:", received);
+    console.log("生き物データ:", releaseData);
   };
 
   return (
@@ -101,18 +212,35 @@ export default function ResultPage() {
           "--primary": style.primary,
           "--secondary": style.secondary,
           "--background": style.background,
-        } as React.CSSProperties
+        } as CSSProperties
       }
     >
       <section className={styles.resultcontent}>
         <div className={styles.resultcard}>
           <span className={styles.resultcardheading}>
-            生成された未来生物
+            生成された未来の生き物
           </span>
 
-          <div className={styles.resultimage} aria-label="生成された生物">
-            ?
+          <div
+            className={styles.resultimage}
+            aria-label="生成された生き物"
+          >
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={creatureName || "生成された生き物"}
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  objectFit: "contain",
+                }}
+              />
+            ) : (
+              "?"
+            )}
           </div>
+
+          {description && <p>{description}</p>}
         </div>
 
         <div className={styles.resultcontrols}>
@@ -139,8 +267,8 @@ export default function ResultPage() {
             className={styles.creatureNameInput}
             type="text"
             maxLength={30}
-            placeholder="生物の名前を入力"
-            aria-label="生物の名前"
+            placeholder="生き物の名前を入力"
+            aria-label="生き物の名前"
             value={creatureName}
             onChange={(event) => setCreatureName(event.target.value)}
           />
@@ -155,7 +283,6 @@ export default function ResultPage() {
           </button>
         </div>
       </section>
-      
     </main>
   );
 }
