@@ -63,6 +63,26 @@ export default function LoadingPage() {
           predators: Number(params.get("predators") ?? 5),
         };
 
+        
+const experienceResponse = await fetch("/api/experiences", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    device_id: "test-device-01",
+  }),
+});
+
+if (!experienceResponse.ok) {
+  throw new Error("体験開始に失敗しました");
+}
+
+const experienceResult = await experienceResponse.json();
+
+console.log("作成された体験:", experienceResult);
+
+
         // バックエンドに設定データを送信
         const response = await fetch("/api/creatures", {
           method: "POST",
@@ -73,7 +93,7 @@ export default function LoadingPage() {
         });
 
         if (!response.ok) {
-          throw new Error(`API通信に失敗しました（${response.status}）`);
+          throw new Error(`missing API（${response.status}）`);
         }
 
         // バックエンドからの応答を受け取る
@@ -88,7 +108,7 @@ export default function LoadingPage() {
         // 通信完了後に結果画面へ移動
         router.push(`/result?${queryString}`);
       } catch (err) {
-        console.error("バックエンド通信エラー:", err);
+        console.error("backenderror:", err);
         setError(
           err instanceof Error
             ? err.message
