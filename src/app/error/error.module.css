@@ -1,16 +1,20 @@
 .errorPage {
     box-sizing: border-box;
-    min-height: 100vh;
     width: 100%;
-    padding: 10px 30px 14px;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    padding: 10px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow: hidden;
     color: #252b45;
 }
 
 /* ヘッダー */
 .header {
+    flex-shrink: 0;
     width: 100%;
     min-height: 53px;
     padding: 0 22px;
@@ -24,6 +28,9 @@
 
 .logo {
     margin: 0;
+    color: #17245e;
+    font-size: 22px;
+    font-weight: 800;
 }
 
 .headerLabel {
@@ -34,10 +41,11 @@
 
 /* エラーカード */
 .errorCard {
+    flex: 0 1 auto;
+    min-height: 400px;
     width: min(100%, 650px);
-    min-height: 348px;
-    margin-top: 100px;
-    padding: 24px 20px;
+    margin-top: clamp(100px, 4vh, 30px);
+    padding: 16px 20px;
     box-sizing: border-box;
     border: 2px solid #f5bfc5;
     border-radius: 25px;
@@ -51,9 +59,10 @@
 
 /* エラーアイコン */
 .errorIcon {
-    width: 101px;
-    height: 101px;
-    margin-bottom: 20px;
+    flex-shrink: 0;
+    width: clamp(65px, 17vh, 101px);
+    height: clamp(65px, 17vh, 101px);
+    margin-bottom: clamp(10px, 3vh, 20px);
     border: 1px solid #ff9ba7;
     border-radius: 50%;
     background: #fff0f1;
@@ -64,7 +73,7 @@
 
 .errorIcon span {
     color: #d94555;
-    font-size: 69px;
+    font-size: clamp(48px, 12vh, 69px);
     line-height: 1;
     font-weight: 700;
     transform: translateY(-2px);
@@ -73,23 +82,23 @@
 .errorTitle {
     margin: 0 0 7px;
     color: #252b45;
-    font-size: 27px;
+    font-size: clamp(20px, 4vh, 27px);
     font-weight: 800;
 }
 
 .errorMessage {
     margin: 0;
     color: #65718e;
-    font-size: 17px;
+    font-size: clamp(13px, 2.7vh, 17px);
     line-height: 1.8;
     font-weight: 400;
 }
 
-/* エラー表示 */
 .errorBadge {
-    width: 237px;
+    flex-shrink: 0;
+    width: min(237px, 85%);
     min-height: 40px;
-    margin-top: 19px;
+    margin-top: clamp(10px, 3vh, 19px);
     border-radius: 30px;
     background: #fff0f1;
     color: #e04455;
@@ -102,8 +111,9 @@
 
 /* リセットボタン */
 .resetArea {
+    flex-shrink: 0;
     width: min(100%, 424px);
-    margin-top: 29px;
+    margin-top: clamp(14px, 4vh, 29px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -135,16 +145,16 @@
 }
 
 .resetNote {
-    margin: 15px 0 0;
+    margin: 10px 0 0;
     color: #17245e;
     font-size: 13px;
     text-align: center;
 }
 
-/* タブレット対応 */
+/* スマートフォン対応 */
 @media (max-width: 600px) {
     .errorPage {
-        padding: 10px 15px 20px;
+        padding: 10px 15px;
     }
 
     .header {
@@ -161,36 +171,16 @@
     }
 
     .errorCard {
-        min-height: 330px;
-        margin-top: 24px;
-        padding: 20px 12px;
         border-radius: 20px;
-    }
-
-    .errorIcon {
-        width: 85px;
-        height: 85px;
-        margin-bottom: 17px;
-    }
-
-    .errorIcon span {
-        font-size: 58px;
+        padding: 12px;
     }
 
     .errorTitle {
-        font-size: 21px;
+        font-size: 20px;
     }
 
     .errorMessage {
         font-size: 14px;
-    }
-
-    .errorBadge {
-        width: min(237px, 85%);
-    }
-
-    .resetArea {
-        margin-top: 24px;
     }
 
     .resetButton {
@@ -200,5 +190,43 @@
 
     .resetNote {
         font-size: 12px;
+    }
+}
+
+/* 画面の高さが小さい場合 */
+@media (max-height: 650px) {
+    .errorPage {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+
+    .header {
+        min-height: 45px;
+    }
+
+    .errorCard {
+        margin-top: 12px;
+        padding: 8px 15px;
+    }
+
+    .errorIcon {
+        margin-bottom: 8px;
+    }
+
+    .errorBadge {
+        min-height: 34px;
+        margin-top: 8px;
+    }
+
+    .resetArea {
+        margin-top: 12px;
+    }
+
+    .resetButton {
+        min-height: 48px;
+    }
+
+    .resetNote {
+        margin-top: 6px;
     }
 }
