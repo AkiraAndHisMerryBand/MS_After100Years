@@ -1,6 +1,7 @@
 
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { useSearchParams } from "next/navigation";
@@ -95,6 +96,8 @@ function isEnvironment(value: unknown): value is Environment {
 }
 
 export default function ResultPage() {
+  const router = useRouter(); 
+
   const searchParams = useSearchParams();
 
   const environmentParam = searchParams.get("environment");
@@ -188,6 +191,9 @@ export default function ResultPage() {
   const style = environmentStyles[environment];
 
   const handleRelease = () => {
+
+    console.log("★ 放つボタンが押されました！"); // ★ 追加
+
     const releaseData = {
       id: creatureId,
       name: creatureName.trim(),
@@ -202,6 +208,13 @@ export default function ResultPage() {
     console.log("パラメータ:", releaseData.parameters);
     console.log("受信データあり:", received);
     console.log("生き物データ:", releaseData);
+
+    sessionStorage.setItem(
+      "releasedCreature",
+      JSON.stringify(releaseData)
+    );
+
+    router.push("/reset");
   };
 
   return (

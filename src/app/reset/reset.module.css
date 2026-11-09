@@ -1,0 +1,310 @@
+.resetPage {
+    width: 100%;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 28px;
+    padding: 32px;
+    background: var(--background);
+    font-family: Arial, "Noto Sans JP", sans-serif;
+    color: #111111;
+}
+
+.resetContent {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+}
+
+.creatureCard {
+    width: 260px;
+    min-width: 260px;
+    height: 390px;
+    box-sizing: border-box;
+    padding: 24px 16px;
+    border: 1px solid #c8c8c8;
+    border-radius: 7px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardHeading {
+    width: 100%;
+    font-size: 17px;
+    line-height: 1.5;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.creatureName {
+    width: 100%;
+    margin: 12px 0 0;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+.creatureImage {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #c8c8c8;
+    font-family: Arial, sans-serif;
+    font-size: 150px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.creatureImage img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.parameterList {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.parameterRow {
+    display: grid;
+    grid-template-columns: 28px minmax(130px, 1fr) 35px;
+    align-items: center;
+    gap: 12px;
+    min-height: 30px;
+    font-size: 17px;
+}
+
+.parameterIcon {
+    color: var(--secondary);
+    width: 26px;
+    height: 26px;
+}
+
+.parameterLabel {
+    font-size: 17px;
+}
+
+.parameterValue {
+    text-align: center;
+    font-size: 17px;
+}
+
+.completeArea {
+    width: 100%;
+    max-width: 900px;
+    min-height: 125px;
+    box-sizing: border-box;
+    padding: 22px 32px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.completeMessage {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.completeIcon {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #9ddfff, #5978ff);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.completeMessage h2 {
+    margin: 0 0 10px;
+    color: #142b67;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.completeMessage p {
+    margin: 0;
+    color: #142b67;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.resetActions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.resetButton {
+    width: 190px;
+    height: 52px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #5985ff, #d49cf3);
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.resetButton:hover {
+    opacity: 0.8;
+}
+
+.resetButton:focus-visible {
+    outline: 2px solid #5985ff;
+    outline-offset: 3px;
+}
+
+.staffBadge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    padding: 7px 12px;
+    border: 1px solid #e6b8f5;
+    border-radius: 9px;
+    background: #fbeaff;
+    color: #6d65ac;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(20, 35, 65, 0.48);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal {
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+    padding: 28px 32px 24px;
+    border-radius: 18px;
+    background: #ffffff;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.modalIcon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #65b7ff, #a65af1);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.modal h2 {
+    margin: 0 0 14px;
+    color: #142b67;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.modalDescription {
+    margin: 0;
+    color: #243e79;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.8;
+}
+
+.modalDivider {
+    width: 100%;
+    height: 1px;
+    margin: 22px 0;
+    background: #e5e8ef;
+}
+
+.modalButtons {
+    width: 100%;
+    display: flex;
+    gap: 16px;
+}
+
+.cancelButton,
+.confirmButton {
+    flex: 1;
+    min-width: 0;
+    height: 50px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.cancelButton {
+    border: 1px solid #d5dbe5;
+    background: #ffffff;
+    color: #8994ad;
+}
+
+.confirmButton {
+    border: none;
+    background: linear-gradient(90deg, #5985ff, #d49cf3);
+    color: #ffffff;
+}
+
+.cancelButton:hover,
+.confirmButton:hover {
+    opacity: 0.8;
+}
+
+.modalStaffBadge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 20px;
+    padding: 7px 14px;
+    border-radius: 9px;
+    background: #fbeaff;
+    color: #6d65ac;
+    font-size: 12px;
+    font-weight: 600;
+}
+
