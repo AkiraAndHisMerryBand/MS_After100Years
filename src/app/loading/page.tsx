@@ -89,11 +89,7 @@ export default function LoadingPage() {
         router.push(`/result?${queryString}`);
       } catch (err) {
         console.error("バックエンド通信エラー:", err);
-        setError(
-          err instanceof Error
-            ? err.message
-            : "通信に失敗しました。"
-        );
+        router.push(`/error?environment=${environment}`);
       }
     };
 

@@ -13,7 +13,7 @@ import {
   TriangleAlert,
 } from "lucide-react";
 
-type Environment = "land" | "ocean" | "cave";
+export type Environment = "land" | "ocean" | "cave";
 
 type ParameterKey =
   | "temperature"
