@@ -1,82 +1,22 @@
 
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { useRouter } from "next/navigation";
+import styles from "./reset.module.css";
+
 import {
-    Thermometer,
-    Expand,
-    Sun,
-    Fish,
-    TriangleAlert,
     Check,
     RotateCcw,
     CircleAlert,
     UserRound,
 } from "lucide-react";
-import styles from "./reset.module.css";
 
-type Environment = "land" | "ocean" | "cave";
+import type { ReleaseData } from "@/lib/types";
+import { environmentStyles, parameters } from "@/lib/constants";
 
-type ParameterKey =
-    | "temperature"
-    | "space"
-    | "brightness"
-    | "food"
-    | "predators";
-
-type Parameters = Record<ParameterKey, number>;
-
-type ReleaseData = {
-    id: string;
-    name: string;
-    environment: Environment;
-    parameters: Parameters;
-    imageUrl: string;
-    description: string;
-};
-
-const environmentStyles: Record<
-    Environment,
-    {
-        name: string;
-        primary: string;
-        secondary: string;
-        background: string;
-    }
-    > = {
-    land: {
-        name: "地上",
-        primary: "#69F2A9",
-        secondary: "#276C4A",
-        background: "linear-gradient(135deg, #FFFFFF 0%, #69F2A9 100%)",
-    },
-    ocean: {
-        name: "海底",
-        primary: "#6984F2",
-        secondary: "#000083",
-        background: "linear-gradient(135deg, #FFFFFF 0%, #6984F2 100%)",
-    },
-    cave: {
-        name: "洞窟",
-        primary: "#C969F2",
-        secondary: "#580088",
-        background: "linear-gradient(135deg, #FFFFFF 0%, #C969F2 100%)",
-    },
-    };
-
-    const parameters: {
-    key: ParameterKey;
-    label: string;
-    Icon: typeof Thermometer;
-    }[] = [
-        { key: "temperature", label: "温度", Icon: Thermometer },
-        { key: "space", label: "空間の広さ", Icon: Expand },
-        { key: "brightness", label: "明るさ", Icon: Sun },
-        { key: "food", label: "食料", Icon: Fish },
-        { key: "predators", label: "天敵の多さ", Icon: TriangleAlert },
-    ];
 
 export default function ResetPage() {
     const router = useRouter();
@@ -93,9 +33,11 @@ export default function ResetPage() {
 
         try {
         const data: ReleaseData = JSON.parse(saved);
-        Promise.resolve().then(() => {
+
+        // 保存されている生物データを取得
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setCreature(data);
-        });
+        
         } catch (error) {
         console.error("生き物データの読み込みに失敗:", error);
         }
@@ -133,14 +75,12 @@ export default function ResetPage() {
 
                 <div className={styles.creatureImage}>
                     {creature?.imageUrl ? (
-                    <img
+                    <Image
                         src={creature.imageUrl}
                         alt={creature.name || "生成された未来生物"}
-                        style={{
-                        maxWidth: "100%",
-                        maxHeight: "100%",
-                        objectFit: "contain",
-                        }}
+                        width={210}
+                        height={210}
+                        className={styles.generatedImage}
                     />
                     ) : (
                     <span>?</span>

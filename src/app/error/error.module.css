@@ -10,6 +10,7 @@
     align-items: center;
     overflow: hidden;
     color: #252b45;
+    background: linear-gradient(to bottom, #FFFFFF 0%, #777777 100%);
 }
 
 /* ヘッダー */

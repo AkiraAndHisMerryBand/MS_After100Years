@@ -1,214 +1,99 @@
 
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
-import { useSearchParams } from "next/navigation";
 import styles from "./result.module.css";
-import {
-  Thermometer,
-  Expand,
-  Sun,
-  Fish,
-  TriangleAlert,
-} from "lucide-react";
 
-export type Environment = "land" | "ocean" | "cave";
+import type { Environment, ApiResult, ReleaseData } from "@/lib/types";
+import { environmentStyles, parameters } from "@/lib/constants";
 
-type ParameterKey =
-  | "temperature"
-  | "space"
-  | "brightness"
-  | "food"
-  | "predators";
 
-type Parameters = Record<ParameterKey, number>;
-
-type ApiResult = {
-  message?: string;
-  receiveData?: {
-    environment?: string;
-    temperature?: number;
-    space?: number;
-    brightness?: number;
-    food?: number;
-    predators?: number;
-  };
-  id?: string;
-  name?: string;
-  imageUrl?: string;
-  description?: string;
-  parameters?: Partial<Parameters>;
-};
-
-const environmentStyles: Record<
-  Environment,
-  {
-    name: string;
-    primary: string;
-    secondary: string;
-    background: string;
-  }
-> = {
-  land: {
-    name: "地上",
-    primary: "#69F2A9",
-    secondary: "#276C4A",
-    background: "linear-gradient(135deg, #FFFFFF 0%, #69F2A9 100%)",
-  },
-  ocean: {
-    name: "海底",
-    primary: "#6984F2",
-    secondary: "#000083",
-    background: "linear-gradient(135deg, #FFFFFF 0%, #6984F2 100%)",
-  },
-  cave: {
-    name: "洞窟",
-    primary: "#C969F2",
-    secondary: "#580088",
-    background: "linear-gradient(135deg, #FFFFFF 0%, #C969F2 100%)",
-  },
-};
-
-const parameters: {
-  key: ParameterKey;
-  label: string;
-  Icon: typeof Thermometer;
-}[] = [
-  { key: "temperature", label: "温度", Icon: Thermometer },
-  { key: "space", label: "空間の広さ", Icon: Expand },
-  { key: "brightness", label: "明るさ", Icon: Sun },
-  { key: "food", label: "食料", Icon: Fish },
-  { key: "predators", label: "天敵の多さ", Icon: TriangleAlert },
-];
-
-const defaultValues: Parameters = {
-  temperature: 5,
-  space: 5,
-  brightness: 5,
-  food: 5,
-  predators: 5,
-};
-
+// 生息環境が正しいか確認する
 function isEnvironment(value: unknown): value is Environment {
   return value === "land" || value === "ocean" || value === "cave";
 }
 
 export default function ResultPage() {
-  const router = useRouter(); 
+  const router = useRouter();
 
-  const searchParams = useSearchParams();
+  // バックエンドから受け取ったデータ
+  const [creatureData, setCreatureData] = useState<ApiResult | null>(null);
 
-  const environmentParam = searchParams.get("environment");
-
-  const [environment, setEnvironment] = useState<Environment>(
-    isEnvironment(environmentParam) ? environmentParam : "land"
-  );
-
-  const [values, setValues] = useState<Parameters>(() => ({
-    temperature: Number(searchParams.get("temperature") ?? 5),
-    space: Number(searchParams.get("space") ?? 5),
-    brightness: Number(searchParams.get("brightness") ?? 5),
-    food: Number(searchParams.get("food") ?? 5),
-    predators: Number(searchParams.get("predators") ?? 5),
-  }));
-
+  // 来場者が入力する名前
   const [creatureName, setCreatureName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [description, setDescription] = useState("");
-  const [creatureId, setCreatureId] = useState("");
-  const [received, setReceived] = useState(false);
 
   useEffect(() => {
     const saved = sessionStorage.getItem("creatureTestResult");
 
     if (!saved) {
+      router.push("/error");
       return;
     }
 
     try {
       const result: ApiResult = JSON.parse(saved);
 
-      // APIが生き物データを直接返す場合
-      // または receiveData に設定データを入れて返す場合の両方に対応
-      const receivedData = result.receiveData ?? result;
+      const data = result.receiveData;
 
-      if (isEnvironment(receivedData.environment)) {
-        setEnvironment(receivedData.environment);
+      if (!data) {
+        throw new Error("受信データがありません");
       }
 
-      const receivedParameters: Partial<Parameters> =
-        "parameters" in receivedData && receivedData.parameters
-          ? receivedData.parameters
-          : receivedData;
-
-      setValues((previous) => ({
-        temperature:
-          typeof receivedParameters.temperature === "number"
-            ? receivedParameters.temperature
-            : previous.temperature,
-        space:
-          typeof receivedParameters.space === "number"
-            ? receivedParameters.space
-            : previous.space,
-        brightness:
-          typeof receivedParameters.brightness === "number"
-            ? receivedParameters.brightness
-            : previous.brightness,
-        food:
-          typeof receivedParameters.food === "number"
-            ? receivedParameters.food
-            : previous.food,
-        predators:
-          typeof receivedParameters.predators === "number"
-            ? receivedParameters.predators
-            : previous.predators,
-      }));
-
-      if (typeof result.name === "string") {
-        setCreatureName(result.name);
+      if (!isEnvironment(data.environment)) {
+        throw new Error("生息環境が正しくありません");
       }
 
-      if (typeof result.imageUrl === "string") {
-        setImageUrl(result.imageUrl);
+      const numbers = [
+        data.temperature,
+        data.space,
+        data.brightness,
+        data.food,
+        data.predators,
+      ];
+
+      for (const number of numbers) {
+        if (!Number.isInteger(number) || number < 1 || number > 10) {
+          throw new Error("パラメータが正しくありません");
+        }
       }
 
-      if (typeof result.description === "string") {
-        setDescription(result.description);
-      }
+      // バックエンドから受け取ったデータをまとめて保存
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setCreatureData(result);
 
-      if (typeof result.id === "string") {
-        setCreatureId(result.id);
-      }
-
-      setReceived(true);
     } catch (error) {
       console.error("受信データの読み込みに失敗しました:", error);
+      router.push("/error");
     }
-  }, []);
-
-  const style = environmentStyles[environment];
-
+  }, [router]);
+  
+  // 生き物を放つボタン
   const handleRelease = () => {
+    if (!creatureData) {
+      return;
+    }
 
-    console.log("★ 放つボタンが押されました！"); // ★ 追加
+    const data = creatureData.receiveData;
 
-    const releaseData = {
-      id: creatureId,
+    const releaseData: ReleaseData = {
+      id: creatureData.id || "",
       name: creatureName.trim(),
-      environment,
-      parameters: values,
-      imageUrl,
-      description,
+      environment: data.environment,
+      parameters: {
+        temperature: data.temperature,
+        space: data.space,
+        brightness: data.brightness,
+        food: data.food,
+        predators: data.predators,
+      },
+      imageUrl: creatureData.imageUrl || "",
+      description: creatureData.description || "",
     };
 
-    console.log("生き物の名前:", releaseData.name);
-    console.log("生息環境:", releaseData.environment);
-    console.log("パラメータ:", releaseData.parameters);
-    console.log("受信データあり:", received);
-    console.log("生き物データ:", releaseData);
-
+    // 生き物の情報を保存
     sessionStorage.setItem(
       "releasedCreature",
       JSON.stringify(releaseData)
@@ -216,6 +101,31 @@ export default function ResultPage() {
 
     router.push("/reset");
   };
+
+  // データの読み込み待ち
+  if (!creatureData) {
+    return <p>データを読み込んでいます...</p>;
+  }
+
+  // バックエンドから受け取ったデータ
+  const data = creatureData.receiveData;
+
+  const environment = data.environment;
+
+  const values = {
+    temperature: data.temperature,
+    space: data.space,
+    brightness: data.brightness,
+    food: data.food,
+    predators: data.predators,
+  };
+
+  const imageUrl = creatureData.imageUrl || "";
+  const description = creatureData.description || "";
+
+  // 環境ごとの表示情報
+  const style = environmentStyles[environment];
+
 
   return (
     <main
@@ -229,6 +139,8 @@ export default function ResultPage() {
       }
     >
       <section className={styles.resultcontent}>
+
+        {/* 生き物のカード */}
         <div className={styles.resultcard}>
           <span className={styles.resultcardheading}>
             生成された未来の生き物
@@ -239,14 +151,12 @@ export default function ResultPage() {
             aria-label="生成された生き物"
           >
             {imageUrl ? (
-              <img
+              <Image
                 src={imageUrl}
                 alt={creatureName || "生成された生き物"}
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  objectFit: "contain",
-                }}
+                width={210}
+                height={210}
+                className={styles.generatedimage}
               />
             ) : (
               "?"
@@ -256,6 +166,8 @@ export default function ResultPage() {
           {description && <p>{description}</p>}
         </div>
 
+
+        {/* パラメータ表示 */}
         <div className={styles.resultcontrols}>
           <div className={styles.parameterlist}>
             {parameters.map(({ key, label, Icon }) => (
@@ -276,6 +188,8 @@ export default function ResultPage() {
             ))}
           </div>
 
+
+          {/* 生き物の名前入力 */}
           <input
             className={styles.creatureNameInput}
             type="text"
@@ -286,6 +200,8 @@ export default function ResultPage() {
             onChange={(event) => setCreatureName(event.target.value)}
           />
 
+
+          {/* 生き物を放つボタン */}
           <button
             type="button"
             className={styles.evolveButton}
@@ -294,6 +210,7 @@ export default function ResultPage() {
           >
             この生き物を放つ
           </button>
+
         </div>
       </section>
     </main>

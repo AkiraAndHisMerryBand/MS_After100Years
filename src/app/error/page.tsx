@@ -1,32 +1,15 @@
 
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import styles from "./error.module.css";
 
-type Environment = "land" | "ocean" | "cave";
-
-const environmentBackgrounds: Record<Environment, string> = {
-  land: "linear-gradient(180deg, #E4F8EC 0%, #B4EBCB 100%)",
-  ocean: "linear-gradient(180deg, #DFE7FF 0%, #AEBFF7 100%)",
-  cave: "linear-gradient(180deg, #F1E2FF 0%, #D6B3F2 100%)",
-};
-
-function isEnvironment(value: string | null): value is Environment {
-  return value === "land" || value === "ocean" || value === "cave";
-}
 
 export default function ErrorPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  const environmentParam = searchParams.get("environment");
-
-  const environment: Environment = isEnvironment(environmentParam)
-    ? environmentParam
-    : "land";
-
+  // スタッフ用リセット
   const handleReset = () => {
     // 保存している生成結果を削除
     sessionStorage.removeItem("creatureTestResult");
@@ -36,22 +19,26 @@ export default function ErrorPage() {
   };
 
   return (
-    <main
-      className={styles.errorPage}
-      style={{
-        background: environmentBackgrounds[environment],
-      }}
-    >
+    <main className={styles.errorPage}>
+
+      {/* ヘッダー */}
       <header className={styles.header}>
-        <h1 className={styles.logo}> <Image
-                  src="/images/rogo.png"
-                  alt="ロゴ"
-                  width={100}
-                  height={79}
-                /></h1>
-        <span className={styles.headerLabel}>未来生物生成端末</span>
+        <h1 className={styles.logo}>
+          <Image
+            src="/images/rogo.png"
+            alt="ロゴ"
+            width={100}
+            height={79}
+          />
+        </h1>
+
+        <span className={styles.headerLabel}>
+          未来生物生成端末
+        </span>
       </header>
 
+
+      {/* エラー内容 */}
       <section className={styles.errorCard}>
         <div className={styles.errorIcon}>
           <span>!</span>
@@ -72,6 +59,8 @@ export default function ErrorPage() {
         </div>
       </section>
 
+
+      {/* スタッフ用リセット */}
       <div className={styles.resetArea}>
         <button
           type="button"
@@ -85,6 +74,7 @@ export default function ErrorPage() {
           ※ 来場者による再生成はできません
         </p>
       </div>
+
     </main>
   );
 }
