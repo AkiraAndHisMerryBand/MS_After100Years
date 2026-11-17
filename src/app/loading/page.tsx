@@ -42,41 +42,8 @@ function LoadingContent(){
 
         const values = getParameters(params);
 
-        
-const experienceResponse = await fetch("/api/experiences", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    device_id: "test-device-01",
-  }),
-});
-
-if (!experienceResponse.ok) {
-  throw new Error("体験開始に失敗しました");
-}
-
-const experienceResult = await experienceResponse.json();
-
-console.log("作成された体験:", experienceResult);
-
-
-        // バックエンドに設定データを送信
-        const response = await fetch("/api/creatures", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestData),
-        });
-
-        if (!response.ok) {
-          throw new Error(`missing API（${response.status}）`);
-        }
-
-        // バックエンドからの応答を受け取る
-        const result = await response.json();
+        // バックエンドに設定データを送信して結果を受け取る
+        const result = await createCreature(environment, values);
 
         // 結果画面で利用できるように保存
         sessionStorage.setItem(
@@ -94,12 +61,8 @@ console.log("作成された体験:", experienceResult);
         // 通信完了後に結果画面へ移動
         router.push(`/result?${queryString}`);
       } catch (err) {
-        console.error("backenderror:", err);
-        setError(
-          err instanceof Error
-            ? err.message
-            : "通信に失敗しました。"
-        );
+        console.error("バックエンド通信エラー:", err);
+        router.push(`/error?environment=${environment}`);
       }
     };
 
