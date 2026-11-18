@@ -60,20 +60,12 @@
         "*.asset": "yaml",
         "*.meta": "yaml",
         "*.prefab": "yaml",
-<<<<<<< HEAD
-        "*.unity": "yaml",
-=======
         "*.unity": "yaml"
->>>>>>> feature/unity
     },
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-<<<<<<< HEAD
-    "dotnet.defaultSolution": "akira_un.slnx"
-=======
     "dotnet.defaultSolution": "Unity.slnx"
->>>>>>> feature/unity
 }

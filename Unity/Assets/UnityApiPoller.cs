@@ -1,30 +1,4 @@
 using System.Collections;
-<<<<<<< HEAD
-using UnityEngine;
-using UnityEngine.Networking;
-
-public class UnityApiPoller : MonoBehaviour
-{
-    
-    [Header("バックエンドのURL")]
-    public string apiUrl = "http://localhost:3000/api/unity/events"; // 例としてイベント取得APIを指定
-
-    void Start()
-    {
-        
-        StartCoroutine(PollBackendRoutine());
-    }
-
-    IEnumerator PollBackendRoutine()
-    {
-        
-        while (true)
-        {
-            // バックエンドデータ
-            StartCoroutine(GetRequest(apiUrl));
-
-            // アクセス
-=======
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -109,20 +83,16 @@ public class UnityApiPoller : MonoBehaviour
             yield return StartCoroutine(GetRequest(apiUrl));
 
             // 5秒ごとに繰り返し
->>>>>>> feature/unity
             yield return new WaitForSeconds(5f);
         }
     }
 
-<<<<<<< HEAD
-=======
     // コルーチンを安全に呼び出すための補助メソッド
     private IEnumerator importCoroutineSafe(IEnumerator routine)
     {
         yield return StartCoroutine(routine);
     }
 
->>>>>>> feature/unity
     IEnumerator GetRequest(string uri)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
@@ -136,13 +106,6 @@ public class UnityApiPoller : MonoBehaviour
             }
             else
             {
-<<<<<<< HEAD
-                
-                Debug.Log("【バックエンドからのデータ】: " + webRequest.downloadHandler.text);
-            }
-        }
-    }
-=======
                 string jsonText = webRequest.downloadHandler.text;
                 Debug.Log("【バックエンドからのデータ】: " + jsonText);
 
@@ -209,5 +172,4 @@ public class UnityApiPoller : MonoBehaviour
 
         Debug.Log($"球体オブジェクトを生成しました: {sphere.name}");
     }
->>>>>>> feature/unity
 }
