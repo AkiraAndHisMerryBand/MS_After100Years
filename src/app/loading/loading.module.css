@@ -1,0 +1,94 @@
+
+.loadingPage {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.loadingCircle {
+    position: relative;
+    width: 300px;
+    height: 300px;
+}
+
+.circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #C8C8C8;
+    border-radius: 50%;
+}
+
+.circleOuter {
+    width: 300px;
+    height: 300px;
+}
+
+.circleMiddle {
+    width: 250px;
+    height: 250px;
+}
+
+.circleInner {
+    width: 200px;
+    height: 200px;
+}
+
+.dot {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    margin: -13px 0 0 -13px;
+    top: 50%;
+    left: 50%;
+    animation: orbit linear infinite;
+}
+
+.dotPurple {
+    background-color: #C969F2;
+    border: 2px solid #FFFFFF;
+    --radius: 150px;
+    animation-duration: 6s;
+}
+
+.dotBlue {
+    background-color: #6984F2;
+    border: 2px solid #FFFFFF;
+    --radius: 125px;
+    animation-duration: 5s;
+}
+
+.dotGreen {
+    background-color: #69F2A9;
+    border: 2px solid #FFFFFF;
+    --radius: 100px;
+    animation-duration: 4s;
+}
+
+.loadingAnimal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loadingText {
+    text-align: center;
+}
+
+@keyframes orbit {
+    from {
+        transform: rotate(0deg) translateX(var(--radius));
+    }
+
+    to {
+        transform: rotate(360deg) translateX(var(--radius));
+    }
+}
