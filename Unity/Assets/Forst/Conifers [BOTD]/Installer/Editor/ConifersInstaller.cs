@@ -8,7 +8,7 @@ public class ConifersInstaller : EditorWindow
     static ConifersInstaller window;
 
     int selectedPipeline = 0;
-    string launcherPath = "Assets/ForestConifers [BOTD]/Installer/Editor/LaunchConifersInstaller";
+    string launcherPath = "Assets/Forst/Conifers [BOTD]/Installer/Editor/LaunchConifersInstaller";
     string[] supportedPipelines = new string[3]
     {
         "Built in render pipeline",
@@ -17,9 +17,9 @@ public class ConifersInstaller : EditorWindow
     };
     string[] packagePaths = new string[3]
     {
-        "Assets/ForestConifers [BOTD]/Conifers_BIRP.unitypackage",
-        "Assets/ForestConifers [BOTD]/Conifers_URP.unitypackage",
-        "Assets/ForestConifers [BOTD]/Conifers_HDRP.unitypackage"
+        "Assets/Forst/Conifers [BOTD]/Conifers_BIRP.unitypackage",
+        "Assets/Forst/Conifers [BOTD]/Conifers_URP.unitypackage",
+        "Assets/Forst/Conifers [BOTD]/Conifers_HDRP.unitypackage"
     };
     bool pipelineChecked = false;
 
